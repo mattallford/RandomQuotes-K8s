@@ -7,18 +7,15 @@ EXPOSE 8080
 
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG TARGETARCH
-ARG TARGETOS
-ARG RUNTIME_ID
-
 WORKDIR /src
 COPY ["RandomQuotes.Web/RandomQuotes.Web.csproj", "RandomQuotes.Web/"]
-RUN dotnet restore "RandomQuotes.Web/RandomQuotes.Web.csproj"
+RUN dotnet restore "RandomQuotes.Web/RandomQuotes.Web.csproj" -a $TARGETARCH
 COPY . .
 WORKDIR "/src/RandomQuotes.Web"
-RUN dotnet build "RandomQuotes.Web.csproj" -c Release -o /app/build
+RUN dotnet build "RandomQuotes.Web.csproj" -c Release -o /app/build -a $TARGETARCH
 
 FROM build AS publish
-RUN dotnet publish "RandomQuotes.Web.csproj" -c Release -o /app/publish -r ${RUNTIME_ID} --self-contained false /p:UseAppHost=false
+RUN dotnet publish "RandomQuotes.Web.csproj" -c Release -o /app/publish /p:UseAppHost=false -a $TARGETARCH
 
 FROM base AS final
 WORKDIR /app
