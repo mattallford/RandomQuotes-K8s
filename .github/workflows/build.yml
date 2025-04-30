@@ -49,8 +49,10 @@ jobs:
             - name: ACR Login
               run: az acr login --name mallfordacr
 
-            - name: build and push website container
+            - name: Build and push website container
               working-directory: src
               run: |
-                docker build -f "./RandomQuotes.Web/Dockerfile" -t ${{ secrets.ACR_LOGIN_SERVER }}/randomquotes:${{ env.GitVersion_SemVer }} .
+                docker build -f "./RandomQuotes.Web/Dockerfile" -t ${{ secrets.ACR_LOGIN_SERVER }}/randomquotes:${{ env.GitVersion_SemVer }} -t ${{ secrets.ACR_LOGIN_SERVER }}/randomquotes:latest .
+                
                 docker push ${{ secrets.ACR_LOGIN_SERVER }}/randomquotes:${{ env.GitVersion_SemVer }}
+                docker push ${{ secrets.ACR_LOGIN_SERVER }}/randomquotes:latest
