@@ -48,7 +48,7 @@ jobs:
             - name: Build Docker Image
               working-directory: src
               run: |
-                  docker build -f "./RandomQuotes.Web/DockerFile" -t ${{ secrets.DOCKERHUB_REPO }}:${{ env.GitVersion_SemVer }} -t ${{ secrets.DOCKERHUB_REPO }}:latest
+                  docker build -f "./RandomQuotes.Web/Dockerfile" -t ${{ secrets.DOCKERHUB_REPO }}:${{ env.GitVersion_SemVer }} -t ${{ secrets.DOCKERHUB_REPO }}:latest .
 
             - name: Push Docker image
               run: |
