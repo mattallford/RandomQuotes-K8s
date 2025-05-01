@@ -45,12 +45,12 @@ jobs:
               with:
                   username: ${{ secrets.DOCKERHUB_PAT_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_PAT }}
-            - name: install buildx
-              id: buildx
-              uses: crazy-max/ghaction-docker-buildx@v1
-              with:
-                version: latest
-            - name: build and push website container
+            - name: Build Docker Image
               working-directory: src
-              run: | 
-                  docker buildx build --push --platform linux/amd64 --no-cache -f "./RandomQuotes.Web/Dockerfile" --tag ${{ secrets.DOCKERHUB_REPO }}:${{ env.GitVersion_SemVer }} --tag ${{ secrets.DOCKERHUB_REPO }}:latest .
+              run: |
+                  docker build -f "./RandomQuotes.Web/DockerFile" -t ${{ secrets.DOCKERHUB_REPO }}:${{ env.GitVersion_SemVer }} -t ${{ secrets.DOCKERHUB_REPO }}:latest
+
+            - name: Push Docker image
+              run: |
+                docker push ${{ secrets.DOCKERHUB_REPO }}:${{ env.GitVersion_SemVer }}
+                docker push ${{ secrets.DOCKERHUB_REPO }}:latest
