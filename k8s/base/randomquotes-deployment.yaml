@@ -24,7 +24,7 @@ spec:
               cpu: "500m"
           imagePullPolicy: "Always"
           ports:
-           - containerPort: 5000
+           - containerPort: 8080
              name: http-port
           env:
            - name: RANDOM_SECRET_PHRASE
