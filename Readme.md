@@ -222,5 +222,3 @@ First install ArgoCD on the cluster.
     - Click the `Sync` button
     - Go to randomquotesdev.local to verify it is running
 - Repeat the above section for test, staging, and production
-
-change again again
